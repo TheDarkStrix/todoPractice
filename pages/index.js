@@ -1,65 +1,126 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import styles from "./index.module.css";
+import { Component } from "react";
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+export default class Hello extends Component {
+  constructor() {
+    super();
+    this.state = {
+      input1: null,
+      input2: null,
+      result: 0,
+    };
+    //this.akash = this.akash.bind(this);
+    this.isChange = this.isChange.bind(this);
+    this.calculation = this.calculation.bind(this);
+    this.add = this.add.bind(this);
+    //this.isChange1 = this.isChange1.bind(this);
+  }
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+  isChange(event) {
+    this.setState({
+      input1: event.target.value, //11
+    });
+    console.log(event.target.value);
+  }
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+  add() {
+    this.setState({
+      input1: this.state.input1 + "+", //11+
+    });
+  }
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+  calculation(operator) {
+    if (operator != undefined) {
+      switch (operator) {
+        case "+":
+          var a = this.state.input1;
+          var b = this.state.input2;
+          var c = parseInt(a) + parseInt(b);
+          this.setState({
+            result: c,
+          });
+          break;
+        case "-":
+          var a = this.state.input1;
+          var b = this.state.input2;
+          var c = parseInt(a) - parseInt(b);
+          this.setState({
+            result: c,
+          });
+          break;
+        case "*":
+          var a = this.state.input1;
+          var b = this.state.input2;
+          var c = parseInt(a) * parseInt(b);
+          this.setState({
+            result: c,
+          });
+          break;
+        case "/":
+          var a = this.state.input1;
+          var b = this.state.input2;
+          var c = parseInt(a) / parseInt(b);
+          this.setState({
+            result: c,
+          });
+          break;
+        default:
+          this.state({
+            result: "INVALID INPUT",
+          });
+          break;
+      }
+    }
+  }
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+  render() {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6">
+            <input
+              className="form-control"
+              name="input1"
+              placeholder="Input 1"
+              value={this.state.input1}
+              onChange={this.isChange}
+            />
+          </div>
+          <div className="col-md-6">
+            <input
+              className="form-control"
+              name="input2"
+              placeholder="Input 2"
+              onChange={this.isChange}
+            />
+          </div>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <br />
+        <button className="btn btn-primary" onClick={this.add}>
+          +
+        </button>
+        <button
+          className="btn btn-primary"
+          onClick={() => this.calculation("-")}
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+          -
+        </button>
+        <button
+          className="btn btn-primary"
+          onClick={() => this.calculation("*")}
+        >
+          *
+        </button>
+        <button
+          className="btn btn-primary"
+          onClick={() => this.calculation("/")}
+        >
+          /
+        </button>
+        {/* Who wins ? : {this.state.input} */}
+
+        {this.state.result != 0 ? <div>{this.state.result}</div> : ""}
+      </div>
+    );
+  }
 }
