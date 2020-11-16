@@ -20,3 +20,7 @@ button,
 input {
   margin: 10px 10px;
 }
+
+.complete{
+  text-decoration: line-through;
+}
